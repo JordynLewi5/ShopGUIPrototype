@@ -17,7 +17,6 @@ public class BuyProductMenu extends JPanel {
     private int totalPrice = 0;
     private Map<Integer, OrderMenuItem> orderMenuItemHashMap = new HashMap<>();
 
-
     public BuyProductMenu(BuyerPanel buyerPanel) {
         this.buyerPanel = buyerPanel;
         initialize();
