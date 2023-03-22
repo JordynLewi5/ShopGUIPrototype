@@ -1,7 +1,4 @@
-import org.sqlite.jdbc3.JDBC3ResultSet;
-
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -10,7 +7,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,7 +50,7 @@ public class BuyProductMenu extends JPanel {
 
 
 
-        /** Resize listener */
+        // Resize listener
         this.addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent e) {
                 BuyProductMenu.this.orderMenuListContainer.setPreferredSize(new Dimension(200, 200));
@@ -62,51 +58,17 @@ public class BuyProductMenu extends JPanel {
         });
     }
 
-
-    public void setOrderMenu(int productID, String productName, String sellerName, Double price, int quantity) {
-//        this.removeAll();
-//        this.revalidate();
-//        this.repaint();
-//
-//        JLabel title = new JLabel("REVIEW ORDER");
-//        this.add(title);
-//        JLabel priceLabel = new JLabel("$" + price);
-//        this.add(priceLabel);
-//        JLabel quantityLabel = new JLabel(quantity + " left in stock");
-//        this.add(quantityLabel);
-//        JLabel sellerNameLabel = new JLabel("Sold by " + sellerName);
-//        this.add(sellerNameLabel);
-//        this.add(new JLabel(" "));
-//        this.add(new JLabel("Quantity: "));
-//        JSpinner spinner = new JSpinner(new SpinnerNumberModel(1,1, quantity,1));
-//        ((JSpinner.DefaultEditor) spinner.getEditor()).getTextField().setEnabled(false);
-//        spinner.setMaximumSize(new Dimension(Integer.MAX_VALUE, 20));
-//        this.add(spinner);
-//        this.add(new JLabel(" "));
-//        this.add(new JLabel("Enter shipping address:"));
-//        JTextField addressField = new JTextField();
-//        addressField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 20));
-//        this.add(addressField);
-//        double totalPrice = Double.parseDouble(new DecimalFormat("#.##").format(price * (int) spinner.getValue()));
-//        JLabel totalPriceLabel = new JLabel("Total Cost: $" + totalPrice);
-//        this.add(totalPriceLabel);
-//        spinner.addChangeListener((event) -> totalPriceLabel.setText("Total Cost: $" + Double.parseDouble(new DecimalFormat("#.##").format(price * (int) spinner.getValue()))));
-//
-//        this.add(new JLabel(" "));
-//
-//
-//        JButton orderButton = new JButton("Place order");
-//        this.add(orderButton);
-//
-//        // Order button event listener, orders product when clicked
-//        orderButton.addActionListener((event) -> {
-//            orderProduct(productID, productName, buyerPanel.getUsername(), sellerName, Double.parseDouble(new DecimalFormat("#.##").format(price * (int) spinner.getValue())), (int) spinner.getValue(), addressField.getText(), quantity);
-//            this.buyerPanel.getOrdersDisplayPanel().displayOrders();
-//        });
-    }
-
-    // getter methods for the components
-
+    /**
+     * Orders provided product
+     * @param productID product id
+     * @param productName product name
+     * @param username username
+     * @param sellerName sellers name
+     * @param price price
+     * @param quantity quantity
+     * @param startingQuantity starting quantity
+     * @param shippingDestinationAddress address
+     */
     public void orderProduct(int productID, String productName, String username, String sellerName, Double price, int quantity, int startingQuantity, String shippingDestinationAddress) {
         Connection connection = null;
         try {
@@ -136,6 +98,7 @@ public class BuyProductMenu extends JPanel {
 
     /**
      * Add products to the buyer product menu.
+     * @param product BuyerProduct object
      */
     public void addToBuyProductMenu(BuyerProduct product) {
         OrderMenuItem orderMenuItem = new OrderMenuItem(product, this);
@@ -200,8 +163,11 @@ public class BuyProductMenu extends JPanel {
         });
     }
 
+    /**
+     * Update the product list for buyers
+     */
+
     public void updateDisplay() {
-        /** Update the product list for buyers */
         this.buyerPanel.getBuyerProductsPanel().displayProducts();
         this.orderMenuListContainer.removeAll();
         this.orderMenuListContainer.revalidate();
