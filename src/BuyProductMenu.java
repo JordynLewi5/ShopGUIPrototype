@@ -33,12 +33,12 @@ public class BuyProductMenu extends JPanel {
         JScrollPane scrollPane = new JScrollPane(this.orderMenuListContainer,
                 JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setPreferredSize(new Dimension(250, 200));
-        this.orderMenuListContainer.setPreferredSize(new Dimension(200, 100));
+//        scrollPane.setPreferredSize(new Dimension(250, 200));
+//        this.orderMenuListContainer.setPreferredSize(new Dimension(200, 200));
         this.orderMenuListContainer.setLayout(new BoxLayout(this.orderMenuListContainer, BoxLayout.Y_AXIS));
         this.orderMenuListContainer.setBackground(Color.decode("#DDDDDD"));
 
-        this.orderMenuOrderInfoContainer.setPreferredSize(new Dimension(200, 200));
+        this.orderMenuOrderInfoContainer.setPreferredSize(new Dimension(200, 100));
 
         this.add(scrollPane, BorderLayout.CENTER);
         this.add(orderMenuOrderInfoContainer, BorderLayout.SOUTH);
@@ -52,7 +52,7 @@ public class BuyProductMenu extends JPanel {
         // Resize listener
         this.addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent e) {
-                BuyProductMenu.this.orderMenuListContainer.setPreferredSize(new Dimension(200, 200));
+//                BuyProductMenu.this.orderMenuListContainer.setPreferredSize(new Dimension(200, 200));
             }
         });
     }

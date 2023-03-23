@@ -52,6 +52,7 @@ public class OrderMenuItem extends JPanel {
         /** Quantity spinner */
         this.add(new JLabel("Quantity: "));
         JSpinner spinner = new JSpinner(new SpinnerNumberModel(1,1, this.quantityInStock,1));
+        spinner.setForeground(new Color(0, 0, 0));
         ((JSpinner.DefaultEditor) spinner.getEditor()).getTextField().setEnabled(false);
         spinner.setMaximumSize(new Dimension(Integer.MAX_VALUE, 20));
         this.add(spinner);
