@@ -2,7 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-
+/**
+* The login screen that users see when the program is first executed
+*/
 public class LoginPanel extends JPanel {
     private GroupLayout layout;
     private JLabel usernamePrompt;
@@ -18,20 +20,19 @@ public class LoginPanel extends JPanel {
         layout.setAutoCreateGaps(true);
         layout.setAutoCreateContainerGaps(true);
         this.setLayout(layout);
-
-
+        
         promptUserLogin();
     }
-
+    
+    /**
+    * Create prompts for user login
+    */
     public void promptUserLogin() {
         usernamePrompt = new JLabel("Username");
         usernameTextField = new JTextField();
         usernameTextField.setMaximumSize(new Dimension(400, 20));
         loginButton = new JButton("Login");
         sellerCheckBox = new JCheckBox("Seller?", false);
-
-
-
 
         // Login button listener
         loginButton.addActionListener((event) -> {
@@ -65,8 +66,10 @@ public class LoginPanel extends JPanel {
         );
     }
 
+    /**
+    * Login sequence, navigate to correct panel
+    */
     public void login() {
-
         Container parentFrame = this.getParent().getParent();
         parentFrame.remove(this.getParent());
         parentFrame.revalidate();
