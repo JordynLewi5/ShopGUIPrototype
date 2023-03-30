@@ -27,6 +27,12 @@ public class Server {
 
     }
 
+    /**
+     * Await messages from connected client.
+     * @param in Client InputStream
+     * @return finalString
+     * @throws IOException
+     */
     public static String awaitMessage(InputStream in) throws IOException {
         String finalString = "";
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -49,6 +55,12 @@ public class Server {
         return finalString;
     }
 
+    /**
+     * Fulfills query or update request by calling post or get depending on the type of request.
+     * @param request
+     * @return
+     * @throws SQLException
+     */
     public static String doRequest(String request) throws SQLException {
         String result = "";
         String type;
@@ -71,6 +83,11 @@ public class Server {
         return result;
     }
 
+    /**
+     * Post changes to a table in the database.
+     * @param request
+     * @throws SQLException
+     */
     public static void post(String request) throws SQLException {
         Connection connection = null;
         try {
@@ -87,6 +104,12 @@ public class Server {
         }
     }
 
+    /**
+     * Get data from a table.
+     * @param request
+     * @return
+     * @throws SQLException
+     */
     public static String get(String request) throws SQLException{
         System.out.println("get");
         Connection connection = null;
@@ -115,7 +138,12 @@ public class Server {
         return result;
     }
 
-
+    /**
+     * Return back some data to the client.
+     * @param result
+     * @param out
+     * @throws IOException
+     */
     public static void reply(String result, OutputStream out) throws IOException {
         if (result == "") result = "\n";
         System.out.println(result);
