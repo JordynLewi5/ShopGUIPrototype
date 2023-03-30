@@ -1,14 +1,15 @@
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 
 public class MainFrame extends JFrame {
-    public MainFrame(String label) {
+    public MainFrame(String label) throws IOException {
         super(label);
         initialize();
     }
 
-    public void initialize() {
+    public void initialize() throws IOException {
         createLoginPanel();
         this.setTitle("Shop App");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

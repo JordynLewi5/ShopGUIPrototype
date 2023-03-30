@@ -4,21 +4,18 @@ import java.sql.*;
 import java.util.regex.Pattern;
 
 public class SellProductMenu extends JPanel {
-    private BoxLayout addProductsLayout;
-
-    private SellerProductsPanel sellerProductsPanel;
-    private String username;
+    private final SellerProductsPanel sellerProductsPanel;
+    private final String username;
     public SellProductMenu(SellerPanel sellerPanel) {
         this.sellerProductsPanel = sellerPanel.getSellerProductsPanel();
         this.username = sellerPanel.getUsername();
-
         initialize();
     }
 
     public void initialize() {
 
 
-        this.addProductsLayout = new BoxLayout(this, BoxLayout.PAGE_AXIS);
+        BoxLayout addProductsLayout = new BoxLayout(this, BoxLayout.PAGE_AXIS);
         this.setLayout(addProductsLayout);
         this.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(Color.LIGHT_GRAY,2),
@@ -47,12 +44,14 @@ public class SellProductMenu extends JPanel {
                 if (Integer.parseInt(quantityTF.getText()) <= 0) return;
             } catch (NumberFormatException e) { return; }
             if (!productNameTF.getText().matches(".*\\w.*")) return;
-            if (priceTF.getText().startsWith("$")) priceTF.setText(priceTF.getText().substring(1,priceTF.getText().length()));
+            if (priceTF.getText().startsWith("$")) priceTF.setText(priceTF.getText().substring(1));
             if (Pattern.matches("([0-9]*)\\\\.([0-9]*)", priceTF.getText())) return;
 
-
-            addProduct(productNameTF.getText(), this.username, Double.parseDouble(priceTF.getText()), Integer.parseInt(quantityTF.getText()));
-
+            try {
+                addProduct(productNameTF.getText(), this.username, Double.parseDouble(priceTF.getText()), Integer.parseInt(quantityTF.getText()));
+            } catch (SQLException err) {
+                System.err.println(err);
+            }
             //reset text fields
             productNameTF.setText("");
             priceTF.setText("");
@@ -61,28 +60,12 @@ public class SellProductMenu extends JPanel {
 
     }
 
-    public void addProduct(String productName, String sellerName, Double price, int quantity) {
-        Connection connection = null;
-        try {
-            connection = DriverManager.getConnection("jdbc:sqlite:C:/Users/jlewi/IdeaProjects/Project1/shop.db");
-            Statement statement = connection.createStatement();
-            statement.executeUpdate("INSERT INTO Products (productName, sellerName, price, quantity)" + "VALUES (" + "'" + productName + "'" + ", " + "'" + sellerName + "'" + ", " + price + ", " + quantity + ")");
-            updateDisplay();
-//            ResultSet products = statement.executeQuery("SELECT * FROM Products");
-        } catch (SQLException error) {
-            System.err.println(error.getMessage());
-        } finally {
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException error) {
-                System.err.println(error.getMessage());
-            }
-        }
+    public void addProduct(String productName, String sellerName, Double price, int quantity) throws SQLException {
+        Client.insertOnServer("Products", "productName, sellerName, price, quantity", productName + ", " + sellerName + ", " + price + ", " + quantity);
+        updateDisplay();
     }
 
-    public void updateDisplay() {
+    public void updateDisplay() throws SQLException {
         sellerProductsPanel.displayProducts();
     }
 }

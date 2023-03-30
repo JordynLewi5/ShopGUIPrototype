@@ -30,7 +30,5 @@ public class Order extends JPanel {
         this.add(new JLabel("Seller: " + this.sellerName));
         this.add(new JLabel("$" + this.price));
         this.add(new JLabel("Stock: " + this.quantity));
-
     }
-
 }

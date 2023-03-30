@@ -1,67 +1,61 @@
 import javax.swing.*;
 import java.awt.*;
-import java.sql.*;
+import java.util.ArrayList;
 
 public class BuyerProductsPanel extends JPanel {
     private JPanel productsPanel;
     private final BuyerPanel buyerPanel;
+
     public BuyerProductsPanel(BuyerPanel buyerPanel) {
+
         this.buyerPanel = buyerPanel;
+
         initialize();
     }
 
     public void initialize() {
-        // initialize panels
-        this.productsPanel = new JPanel();
-        JScrollPane scrollPane = new JScrollPane(productsPanel,
-                JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        // configure panels
-        this.productsPanel.setLayout(new GridLayout(0,5,2,2));
 
+        // Initialize panels
         this.setLayout(new BorderLayout());
         this.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(Color.LIGHT_GRAY,2),
                 BorderFactory.createEmptyBorder(10, 10, 10, 10)));
-        // add panels
+
+        this.productsPanel = new JPanel();
+        this.productsPanel.setLayout(new GridLayout(0,5,2,2));
+
         this.add(new JLabel("Current Products"), BorderLayout.NORTH);
-        this.add(scrollPane, BorderLayout.CENTER);
-        // display products
+        this.add(new JScrollPane(productsPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER), BorderLayout.CENTER);
+
+        // Update product display
         displayProducts();
     }
 
-
+    /**
+     * Retrieves products from server database and updates product display.
+     */
     public void displayProducts() {
+
         // Reset components
         this.productsPanel.removeAll();
         this.productsPanel.revalidate();
         this.productsPanel.repaint();
 
-        Connection connection = null;
-        try {
-            connection = DriverManager.getConnection("jdbc:sqlite:C:/Users/jlewi/IdeaProjects/Project1/shop.db");
-            Statement statement = connection.createStatement();
-            ResultSet products = statement.executeQuery("SELECT * FROM Products");
-            while (products.next()) {
-                BuyerProduct buyerProduct = new BuyerProduct(
-                        buyerPanel.getOrderProductMenu(),
-                        products.getInt("productID"),
-                        products.getString("productName"),
-                        products.getDouble("price"),
-                        products.getString("sellerName"),
-                        products.getInt("quantity"));
-                this.productsPanel.add(buyerProduct);
-            }
-        } catch (SQLException error) {
-            System.err.println(error.getMessage());
-        } finally {
-            try {
-                if (connection != null) connection.close();
-            } catch (SQLException error) {
-                System.err.println(error.getMessage());
-            }
+        // Retrieve data from server
+        ArrayList<String[]> productsTable = Client.selectOnServer("Products");
+
+        // Further parse out the data and add products to the display
+        for (String[] product : productsTable) {
+            BuyerProduct productPanel = new BuyerProduct(
+                    this.buyerPanel.getOrderProductMenu(),
+                    Integer.parseInt(product[0]),
+                    product[1],
+                    product[2],
+                    Double.parseDouble(product[3]),
+                    Integer.parseInt(product[4]));
+
+            this.productsPanel.add(productPanel);
         }
     }
-
 }
 

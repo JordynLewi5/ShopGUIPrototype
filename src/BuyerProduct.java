@@ -8,7 +8,7 @@ public class BuyerProduct extends JPanel {
     private final String sellerName;
     private int quantity;
     private final BuyProductMenu menu;
-    public BuyerProduct(BuyProductMenu menu, int productID, String productName, double price, String sellerName, int quantity) {
+    public BuyerProduct(BuyProductMenu menu, int productID, String productName, String sellerName, double price, int quantity) {
         this.menu = menu;
         this.productID = productID;
         this.productName = productName;
@@ -31,11 +31,8 @@ public class BuyerProduct extends JPanel {
 
         JButton orderButton = new JButton("Order");
         this.add(orderButton);
-        orderButton.addActionListener((event) -> {
-//            BuyProductMenu orderProductMenu = new BuyProductMenu(this.panel, this.username, this.productName, this.sellerName, this.price, this.quantity);
-//            this.menu.setOrderMenu(this.productID, this.productName, this.sellerName, this.price, this.quantity);
-            this.menu.addToBuyProductMenu(this);
-        });
+
+        orderButton.addActionListener((event) -> this.menu.addToBuyProductMenu(this));
     }
 
 
@@ -76,7 +73,8 @@ public class BuyerProduct extends JPanel {
     }
 
     /**
-     * set quantity
+     * Sets quantity
+     * @param quantity
      */
     public void setQuantity(int quantity) {
         this.quantity = quantity;

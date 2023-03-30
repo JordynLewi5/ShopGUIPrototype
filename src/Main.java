@@ -1,10 +1,16 @@
 import javax.swing.*;
+import java.io.IOException;
 
 public class Main {
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable () {
             @Override public void run() {
-               MainFrame mainFrame = new MainFrame("Shop App");
+                try {
+                    new MainFrame("Shop App");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
     }

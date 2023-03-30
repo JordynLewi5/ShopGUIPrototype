@@ -2,11 +2,11 @@ import javax.swing.*;
 import java.awt.*;
 
 public class SellerProduct extends JPanel {
-    private String productName;
-    private double price;
-    private String sellerName;
-    private int quantity;
-    public SellerProduct(String productName, double price, String sellerName, int quantity) {
+    private final String productName;
+    private final double price;
+    private final String sellerName;
+    private final int quantity;
+    public SellerProduct(String productName, String sellerName, double price, int quantity) {
         this.productName = productName;
         this.price = price;
         this.sellerName = sellerName;

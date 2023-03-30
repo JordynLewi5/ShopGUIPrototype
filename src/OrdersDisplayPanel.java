@@ -1,14 +1,12 @@
-import org.sqlite.SQLiteException;
-
 import javax.swing.*;
 import java.awt.*;
-import java.sql.*;
+import java.util.ArrayList;
 
 // Displays the same information regardless of whether the user is in the buyer or seller page.
 // Displays most relevant orders, i.e. buyer will see orders they have made first (or exclusively), sellers will see
 // orders that they are selling.
 public class OrdersDisplayPanel extends JPanel {
-    private String username;
+    private final String username;
     private JPanel ordersPanel;
     private boolean otherOrders = true;
     public OrdersDisplayPanel(String username) {
@@ -41,39 +39,28 @@ public class OrdersDisplayPanel extends JPanel {
         displayOrders();
     }
 
+    /**
+     * Retrieves orders from server database and updates order display.
+     */
     public void displayOrders() {
         // Reset components
         this.ordersPanel.removeAll();
         this.ordersPanel.revalidate();
         this.ordersPanel.repaint();
 
-
-        Connection connection = null;
-        try {
-            connection = DriverManager.getConnection("jdbc:sqlite:C:/Users/jlewi/IdeaProjects/Project1/shop.db");
-            Statement statement = connection.createStatement();
-            ResultSet orders = statement.executeQuery("SELECT * FROM Orders");
-            while (orders.next()) {
-                if (this.username.equals(orders.getString("buyerName")) || this.username.equals(orders.getString("sellerName")) || this.otherOrders) {
-                    Order order = new Order(
-                            orders.getInt("productID"),
-                            orders.getString("productName"),
-                            orders.getString("buyerName"),
-                            orders.getString("sellerName"),
-                            orders.getDouble("price"),
-                            orders.getInt("quantity"));
-                    this.ordersPanel.add(order);
+        ArrayList<String[]> ordersTable = Client.selectOnServer("Orders");
+        for (String[] order : ordersTable) {
+                if (this.username.equals(order[2]) || this.username.equals(order[3]) || this.otherOrders) {
+                    Order orderPanel = new Order(
+                            Integer.parseInt(order[0]),
+                            order[1],
+                            order[2],
+                            order[3],
+                            Double.parseDouble(order[4]),
+                            Integer.parseInt(order[5]));
+                    this.ordersPanel.add(orderPanel);
                 }
             }
-        } catch (SQLException error) {
-            System.err.println(error.getMessage());
-        } finally {
-            try {
-                if (connection != null) connection.close();
-            } catch (SQLException error) {
-                System.err.println(error.getMessage());
-            }
-
         }
     }
-}
+
