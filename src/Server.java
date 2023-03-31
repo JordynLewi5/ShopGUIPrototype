@@ -45,10 +45,8 @@ public class Server {
             }
 
             byte[] receivedData = buffer.toByteArray();
-
             finalString = new String(receivedData, "UTF-16");
             finalString = finalString.substring(0, finalString.length() - 1);
-            System.out.println(finalString);
         } catch (SocketException err) {
             System.err.println(err);
         }
@@ -96,7 +94,6 @@ public class Server {
             statement.executeUpdate(request);
         } catch (SQLException err) {
             System.err.println(err);
-            System.out.println(77);
         } finally {
             if (connection != null) {
                 connection.close();
@@ -111,7 +108,6 @@ public class Server {
      * @throws SQLException
      */
     public static String get(String request) throws SQLException{
-        System.out.println("get");
         Connection connection = null;
         String result = "";
         try {
@@ -146,7 +142,6 @@ public class Server {
      */
     public static void reply(String result, OutputStream out) throws IOException {
         if (result == "") result = "\n";
-        System.out.println(result);
         out.write(result.getBytes(StandardCharsets.UTF_16), 0, result.getBytes(StandardCharsets.UTF_16).length);
         out.flush();
     }

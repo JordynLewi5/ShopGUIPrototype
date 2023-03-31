@@ -15,7 +15,6 @@ public class Client {
      * @return {String} reply
      */
     public static String sendRequest(String message) {
-
         message += "\n";
         String reply = "";
 
@@ -42,7 +41,6 @@ public class Client {
      * @throws IOException
      */
     public static String awaitReply(InputStream in) throws IOException {
-
         String finalString = "";
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 
@@ -57,7 +55,6 @@ public class Client {
             byte[] receivedData = buffer.toByteArray();
             finalString = new String(receivedData, StandardCharsets.UTF_16);
             finalString = finalString.substring(0, finalString.length() - 1);
-            System.out.println(finalString);
         } catch (SocketException err) {
             System.err.println(err);
         }
@@ -71,7 +68,6 @@ public class Client {
      * @param columnValues
      */
     public static void insertOnServer(String tableName, String columnNames, String columnValues) {
-
         sendRequest("INSERT INTO " + tableName + " (" + columnNames + ") VALUES (" + columnValues +")");
     }
 
@@ -81,7 +77,6 @@ public class Client {
      * @param columnValues
      */
     public static void insertOnServer(String tableName, String columnValues) {
-
         sendRequest("INSERT INTO " + tableName + " VALUES(" + columnValues + ")");
     }
 
@@ -102,7 +97,6 @@ public class Client {
      * @param key
      */
     public static void updateOnServer(String tableName, String columnName, String setColumn, String identifier, String key) {
-
         sendRequest("UPDATE " + tableName + " SET " + columnName + " = " + setColumn + " WHERE " + identifier + " = " + key);
     }
 
@@ -133,7 +127,6 @@ public class Client {
      * @return {ArrayList<String[]>} table
      */
     public static ArrayList<String[]> parseStringToArrayList(String string) {
-
         ArrayList<String[]> table = new ArrayList<String[]>();
         ArrayList<String> lines = new ArrayList<>(Arrays.asList(string.split(";nextLine;")));
 

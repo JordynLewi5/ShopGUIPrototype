@@ -25,16 +25,23 @@ public class SellProductMenu extends JPanel {
         this.add(new JLabel("Product name:"));
 
         JTextField productNameTF = new JTextField();
+        productNameTF.setMaximumSize(new Dimension(400, 20));
+        productNameTF.setPreferredSize(new Dimension(200, 20));
         this.add(productNameTF);
 
         this.add(new JLabel("Price:"));
         JTextField priceTF = new JTextField();
+        priceTF.setMaximumSize(new Dimension(400, 20));
+        priceTF.setPreferredSize(new Dimension(200, 20));
         this.add(priceTF);
 
         this.add(new JLabel("Quantity:"));
         JTextField quantityTF = new JTextField();
+        quantityTF.setMaximumSize(new Dimension(400, 20));
+        quantityTF.setPreferredSize(new Dimension(200, 20));
         this.add(quantityTF);
 
+        this.add(Box.createVerticalStrut(20));
 
         JButton addButton = new JButton("Add product");
         this.add(addButton);
