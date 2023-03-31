@@ -103,7 +103,7 @@ public class BuyProductMenu extends JPanel {
 
         JButton orderButton = new JButton("Order");
         JTextField addressField = new JTextField();
-        addressField.setMaximumSize(new Dimension(150, 20));
+        addressField.setPreferredSize(new Dimension(100, 20));
         double totalPrice = Double.parseDouble(new DecimalFormat("#.##").format(this.totalPrice));
         JLabel totalPriceLabel = new JLabel("Total Cost: $" + totalPrice);
         this.orderMenuOrderInfoContainer.add(new JLabel("Enter shipping address:"));

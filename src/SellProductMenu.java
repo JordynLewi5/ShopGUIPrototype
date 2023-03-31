@@ -68,7 +68,7 @@ public class SellProductMenu extends JPanel {
     }
 
     public void addProduct(String productName, String sellerName, Double price, int quantity) throws SQLException {
-        Client.insertOnServer("Products", "productName, sellerName, price, quantity", productName + ", " + sellerName + ", " + price + ", " + quantity);
+        Client.insertOnServer("Products", "productName, sellerName, price, quantity", "'" + productName + "', '" + sellerName + "', " + price + ", " + quantity);
         updateDisplay();
     }
 

@@ -47,6 +47,8 @@ public class Server {
             byte[] receivedData = buffer.toByteArray();
             finalString = new String(receivedData, "UTF-16");
             finalString = finalString.substring(0, finalString.length() - 1);
+            System.out.println(finalString);
+
         } catch (SocketException err) {
             System.err.println(err);
         }
@@ -70,9 +72,11 @@ public class Server {
 
         switch(type) {
             case "update":
+                System.out.println("update");
                 post(request);
                 break;
             case "query":
+                System.out.println("query");
                 result = get(request);
                 break;
             default:
@@ -108,6 +112,7 @@ public class Server {
      * @throws SQLException
      */
     public static String get(String request) throws SQLException{
+        System.out.println("get");
         Connection connection = null;
         String result = "";
         try {
