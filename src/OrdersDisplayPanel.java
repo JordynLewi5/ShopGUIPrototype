@@ -29,6 +29,7 @@ public class OrdersDisplayPanel extends JPanel {
         // add panels
         this.add(new JLabel("Orders"), BorderLayout.NORTH);
         this.add(scrollPane, BorderLayout.CENTER);
+
         JCheckBox displayOtherOrdersCheckBox = new JCheckBox("Display unrelated orders");
         displayOtherOrdersCheckBox.setSelected(otherOrders);
         this.add(displayOtherOrdersCheckBox, BorderLayout.SOUTH);

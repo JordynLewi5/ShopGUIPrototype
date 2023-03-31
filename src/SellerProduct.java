@@ -22,8 +22,9 @@ public class SellerProduct extends JPanel {
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         this.add(new JLabel(this.productName));
         this.add(new JLabel("$" + this.price));
-        this.add(new JLabel("Seller: " + this.sellerName));
         this.add(new JLabel("Stock: " + this.quantity));
+        this.add(new JLabel("Seller: " + this.sellerName));
+
     }
 
 }

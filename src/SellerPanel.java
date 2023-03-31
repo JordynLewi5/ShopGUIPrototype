@@ -15,7 +15,7 @@ public class SellerPanel extends JPanel {
     public void initialize() {
 
         this.setLayout(new BorderLayout());
-        this.add(new JLabel("Seller's Page"), BorderLayout.NORTH);
+        this.add(new JLabel(this.username + "'s Seller Page"), BorderLayout.NORTH);
 
         // creates main panels for seller panel
         this.sellerProductsPanel = new SellerProductsPanel(this); // instantiate products list panel

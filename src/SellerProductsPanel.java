@@ -7,6 +7,7 @@ public class SellerProductsPanel extends JPanel {
     private final String username;
     private JPanel productsPanel;
 
+
     public SellerProductsPanel(SellerPanel sellerPanel) {
         this.username = sellerPanel.getUsername();
         initialize();
@@ -31,18 +32,15 @@ public class SellerProductsPanel extends JPanel {
         this.add(ordersDisplayPanel, BorderLayout.SOUTH);
 
         // display products
-        try {
-            displayProducts();
-        } catch (SQLException err) {
-            System.err.println(err);
-        }
+        displayProducts();
+
 
     }
 
     /**
      * Retrieves products from server database and updates product display.
      */
-    public void displayProducts() throws SQLException{
+    public void displayProducts() {
         // Reset components
 
         this.productsPanel.removeAll();
@@ -58,6 +56,18 @@ public class SellerProductsPanel extends JPanel {
                     Integer.parseInt(product[4]));
 
             this.productsPanel.add(productPanel);
+
+            if (product[2].equals(this.username)) {
+                JButton removeItemButton = new JButton("X");
+                removeItemButton.setForeground(new Color(255, 50, 50));
+                productPanel.add(removeItemButton);
+
+                removeItemButton.addActionListener((event) -> {
+                    Client.deleteOnServer("Products", "productID", product[0]);
+                    this.productsPanel.remove(productPanel);
+                    displayProducts();
+                });
+            }
         }
     }
 }

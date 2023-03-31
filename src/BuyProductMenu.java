@@ -89,7 +89,10 @@ public class BuyProductMenu extends JPanel {
         this.totalPrice = 0;
         this.orderMenuItemHashMap.forEach((key, orderMenuItem) -> {
             this.orderMenuListContainer.add(orderMenuItem);
+            this.totalPrice += orderMenuItem.getTotalPriceOfOrderItem();
+
             JButton removeItemButton = new JButton("X");
+            removeItemButton.setMinimumSize(new Dimension(150, 20));
             removeItemButton.setForeground(new Color(255, 50, 50));
             this.orderMenuListContainer.add(removeItemButton);
             this.orderMenuListContainer.add(Box.createVerticalStrut(10));
@@ -98,7 +101,7 @@ public class BuyProductMenu extends JPanel {
                 this.orderMenuItemHashMap.remove(key);
                 renderBuyProductMenuList();
             });
-            this.totalPrice += orderMenuItem.getTotalPriceOfOrderItem();
+
         });
 
         JButton orderButton = new JButton("Order");
