@@ -71,4 +71,6 @@ public class LoginPanel extends JPanel {
             parentFrame.add(buyerPanel);
         }
     }
+
+
 }

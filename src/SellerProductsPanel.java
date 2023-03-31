@@ -49,24 +49,28 @@ public class SellerProductsPanel extends JPanel {
 
         ArrayList<String[]> productsTable = Client.selectOnServer("Products");
         for (String[] product : productsTable) {
-            SellerProduct productPanel = new SellerProduct(
-                    product[1],
-                    product[2],
-                    Double.parseDouble(product[3]),
-                    Integer.parseInt(product[4]));
+            try {
+                SellerProduct productPanel = new SellerProduct(
+                        product[1],
+                        product[2],
+                        Double.parseDouble(product[3]),
+                        Integer.parseInt(product[4]));
 
-            this.productsPanel.add(productPanel);
+                this.productsPanel.add(productPanel);
 
-            if (product[2].equals(this.username)) {
-                JButton removeItemButton = new JButton("X");
-                removeItemButton.setForeground(new Color(255, 50, 50));
-                productPanel.add(removeItemButton);
+                if (product[2].equals(this.username)) {
+                    JButton removeItemButton = new JButton("X");
+                    removeItemButton.setForeground(new Color(255, 50, 50));
+                    productPanel.add(removeItemButton);
 
-                removeItemButton.addActionListener((event) -> {
-                    Client.deleteOnServer("Products", "productID", product[0]);
-                    this.productsPanel.remove(productPanel);
-                    displayProducts();
-                });
+                    removeItemButton.addActionListener((event) -> {
+                        Client.deleteOnServer("Products", "productID", product[0]);
+                        this.productsPanel.remove(productPanel);
+                        displayProducts();
+                    });
+                }
+            } catch (ArrayIndexOutOfBoundsException err) {
+                // do nothing
             }
         }
     }

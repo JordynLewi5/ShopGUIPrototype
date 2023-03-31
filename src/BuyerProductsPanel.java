@@ -46,15 +46,19 @@ public class BuyerProductsPanel extends JPanel {
 
         // Further parse out the data and add products to the display
         for (String[] product : productsTable) {
-            BuyerProduct productPanel = new BuyerProduct(
-                    this.buyerPanel.getOrderProductMenu(),
-                    Integer.parseInt(product[0]),
-                    product[1],
-                    product[2],
-                    Double.parseDouble(product[3]),
-                    Integer.parseInt(product[4]));
+            try {
+                BuyerProduct productPanel = new BuyerProduct(
+                        this.buyerPanel.getOrderProductMenu(),
+                        Integer.parseInt(product[0]),
+                        product[1],
+                        product[2],
+                        Double.parseDouble(product[3]),
+                        Integer.parseInt(product[4]));
 
-            this.productsPanel.add(productPanel);
+                this.productsPanel.add(productPanel);
+            } catch (ArrayIndexOutOfBoundsException | NumberFormatException err) {
+                // do nothing
+            }
         }
     }
 }

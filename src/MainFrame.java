@@ -4,12 +4,12 @@ import java.io.IOException;
 
 
 public class MainFrame extends JFrame {
-    public MainFrame(String label) throws IOException {
+    public MainFrame(String label) {
         super(label);
         initialize();
     }
 
-    public void initialize() throws IOException {
+    public void initialize(){
         createLoginPanel();
         this.setTitle("Shop App");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -25,6 +25,10 @@ public class MainFrame extends JFrame {
         loginPanel.setPreferredSize(new Dimension(400, 100));
         smallPanel.add(loginPanel, BorderLayout.CENTER);
         this.add(smallPanel, BorderLayout.CENTER);
-
     }
+
+    /**
+     * Set onLoginScreen status.
+     * @param onLoginScreen
+     */
 }
