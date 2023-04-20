@@ -63,24 +63,10 @@ public class Server {
      */
     public static String doRequest(String request) throws SQLException {
         String result = "";
-        String type;
         if (request.contains("SELECT")) {
-            type = "query";
+            result = get(request);
         } else {
-            type = "update";
-        }
-
-        switch(type) {
-            case "update":
-                System.out.println("update");
-                post(request);
-                break;
-            case "query":
-                System.out.println("query");
-                result = get(request);
-                break;
-            default:
-                //do nothing
+            post(request);        
         }
         return result;
     }
